@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Hamesha Yaad Rahegi 💫</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      color: #ff4d6d;
+      text-shadow: 0 0 10px #ff4d6d;
+      animation: fadeIn 2s ease-in;
+    }
+
+    .typing-box {
+      font-size: 1.3rem;
+      color: #f2f2f2;
+      min-height: 80px;
+      margin-top: 20px;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .slideshow {
+      margin-top: 30px;
+      position: relative;
+      width: 80%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 15px;
+      box-shadow: 0 0 30px #ff4d6d88;
+      overflow: hidden;
+    }
+
+    .slideshow img {
+      width: 100%;
+      height: auto;
+      display: none;
+      border-radius: 15px;
+      animation: fadeSlide 2s ease-in-out;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: scale(1.1); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 1rem;
+      color: #ccc;
+      animation: fadeIn 4s ease-in;
+    }
+
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particles span {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #ff4d6d;
+      border-radius: 50%;
+      animation: floatUp 5s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <h1>तू हमेशा याद रहेगी 💖</h1>
+    <div class="typing-box" id="typingBox">...</div>
+
+    <div class="slideshow" id="slideshow">
+      <img src="photo1.jpg" alt="photo1">
+      <img src="photo2.jpg" alt="photo2">
+      <img src="photo3.jpg" alt="photo3">
+      <img src="photo4.jpg" alt="photo4">
+    </div>
+
+    <p class="footer">— तेरे बेवकूफ लेकिन लॉयल दोस्त की तरफ से 🫶</p>
+  </div>
+
+  <audio id="bgm" autoplay loop>
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Floating particles
+    const particles = document.getElementById("particles");
+    for (let i = 0; i < 40; i++) {
+      const span = document.createElement("span");
+      span.style.left = Math.random() * 100 + "vw";
+      span.style.top = Math.random() * 100 + "vh";
+      span.style.animationDuration = Math.random() * 3 + 3 + "s";
+      span.style.width = span.style.height = Math.random() * 6 + 4 + "px";
+      particles.appendChild(span);
+    }
+
+    // Slideshow
+    let slideIndex = 0;
+    const slides = document.querySelectorAll("#slideshow img");
+
+    function showSlide() {
+      slides.forEach(img => img.style.display = "none");
+      slides[slideIndex].style.display = "block";
+      slideIndex = (slideIndex + 1) % slides.length;
+    }
+
+    showSlide();
+    setInterval(showSlide, 3000);
+
+    // Typewriter text (1-by-1 and replace previous)
+    const messages = [
+      "कुछ रिश्ते शब्दों से नहीं, एहसासों से जुड़ते हैं।",
+      "हर हँसी के पीछे तेरा नाम होता है।",
+      "तू मेरी लाइफ की सबसे प्यारी दोस्त है।",
+      "तेरे बिना अधूरी है ये दोस्ती की कहानी।",
+      "कभी भूले तो डांटना, मगर नाराज़ मत होना।",
+      "तेरे जैसा कोई नहीं... कभी होगा भी नहीं 💖"
+    ];
+
+    let msgIndex = 0;
+    const typingBox = document.getElementById("typingBox");
+
+    function typeMessage(message, callback) {
+      typingBox.innerHTML = "";
+      let charIndex = 0;
+      const interval = setInterval(() => {
+        typingBox.innerHTML += message.charAt(charIndex);
+        charIndex++;
+        if (charIndex === message.length) {
+          clearInterval(interval);
+          setTimeout(callback, 2000);
+        }
+      }, 50);
+    }
+
+    function showMessages() {
+      typeMessage(messages[msgIndex], () => {
+        msgIndex = (msgIndex + 1) % messages.length;
+        showMessages();
+      });
+    }
+
+    showMessages();
+
+    // Audio click fallback
+    window.addEventListener("click", () => {
+      const audio = document.getElementById("bgm");
+      if (audio.paused) {
+        audio.play();
+      }
+    });
+  </script>
+
+</body>
+</html>
